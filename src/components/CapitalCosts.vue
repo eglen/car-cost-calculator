@@ -2,6 +2,8 @@
   <div>
     <input type="number" v-model="purchasePrice" />
     <p>{{ monthlyCosts }}</p>
+    <h2>From Store</h2>
+    <p>{{ storedCosts }}</p>
   </div>
 </template>
 
@@ -17,10 +19,14 @@ export default {
   computed: {
     monthlyCosts: function() {
       var monthlyDepreciation = [];
-      for (var month = 0; month < 120; month++) {
+      for (var month = 0; month < 10; month++) {
         monthlyDepreciation.push(this.costForMonth(this.purchasePrice, month));
       }
+      this.$store.dispatch("updateSeries", monthlyDepreciation);
       return monthlyDepreciation;
+    },
+    storedCosts: function() {
+      return this.$store.getters.getCapitalCosts
     }
   },
   methods: {
