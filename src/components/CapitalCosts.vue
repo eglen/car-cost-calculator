@@ -1,7 +1,6 @@
 <template>
   <div>
     <input type="number" v-model="purchasePrice" />
-    <p>{{ monthlyCosts }}</p>
   </div>
 </template>
 
@@ -14,8 +13,8 @@ export default {
       purchasePrice: 50000
     };
   },
-  computed: {
-    monthlyCosts: function() {
+  watch: {
+    purchasePrice: function() {
       var monthlyValue = [];
       var monthlyDepreciation = [];
       for (var month = 0; month < 48; month++) {
@@ -25,10 +24,6 @@ export default {
         }
       }
       this.$store.dispatch("updateSeries", monthlyDepreciation);
-      return monthlyDepreciation;
-    },
-    storedCosts: function() {
-      return this.$store.getters.getCapitalCosts;
     }
   },
   methods: {
