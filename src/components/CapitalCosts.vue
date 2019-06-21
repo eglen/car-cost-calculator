@@ -16,9 +16,13 @@ export default {
   },
   computed: {
     monthlyCosts: function() {
+      var monthlyValue = [];
       var monthlyDepreciation = [];
       for (var month = 0; month < 48; month++) {
-        monthlyDepreciation.push(this.costForMonth(this.purchasePrice, month));
+        monthlyValue.push(this.valueAtMonth(this.purchasePrice, month));
+        if (month > 0) {
+          monthlyDepreciation.push(monthlyValue[month - 1] - monthlyValue[month]);
+        }
       }
       this.$store.dispatch("updateSeries", monthlyDepreciation);
       return monthlyDepreciation;
@@ -28,9 +32,9 @@ export default {
     }
   },
   methods: {
-    costForMonth(costNew, month) {
+    valueAtMonth(purchasePrice, month) {
       var ratio = -0.0125;
-      return costNew * Math.exp(ratio * month);
+      return purchasePrice * Math.exp(ratio * month);
     }
   }
 };

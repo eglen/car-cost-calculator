@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <div style="position: relative; height: 200px"> -->
-      <CostBreakdownChart :height="100" :chart-data="chartData" :chart-options="chartOptions"/>
+      <CostBreakdownChart :height="350" :chart-data="chartData" :chart-options="chartOptions"/>
     <!-- </div> -->
     <CapitalCosts msg="Placeholder" />
   </div>
