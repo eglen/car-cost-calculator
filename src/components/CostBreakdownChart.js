@@ -3,13 +3,10 @@ const { reactiveProp } = mixins;
 
 export default {
   extends: Bar,
+  props: ["chartOptions"],
   mixins: [reactiveProp],
   mounted() {
-    // Overwriting base render method with actual data.
     // this.chartData is created in the mixin.
-    this.renderChart(this.chartData, {
-      maintainAspectRatio: false,
-      responsive: true
-    });
+    this.renderChart(this.chartData, this.chartOptions);
   }
 };

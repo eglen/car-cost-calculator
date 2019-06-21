@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <div style="position: relative; height: 200px"> -->
-      <CostBreakdownChart :height="100" :chart-data="chartdata" :options="chartoptions"/>
+      <CostBreakdownChart :height="100" :chart-data="chartData" :chart-options="chartOptions"/>
     <!-- </div> -->
     <CapitalCosts msg="Placeholder" />
   </div>
@@ -10,6 +10,7 @@
 <script>
 import CapitalCosts from "./components/CapitalCosts.vue";
 import CostBreakdownChart from "./components/CostBreakdownChart";
+import { range } from "lodash";
 
 export default {
   name: "app",
@@ -19,24 +20,30 @@ export default {
   },
   data () {
     return {
-      //datacollection: {},
-      chartoptions: {
+      chartOptions: {
         maintainAspectRatio: false,
-        responsive: true
+        responsive: true,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
       }
     }
   },
   mounted () {
-    this.fillData()
   },
   computed: {
-    chartdata () {
+    chartData () {
+
       return {
-        labels: ['Capital Costs'],
+        labels: range(1, this.$store.getters.getCapitalCosts.length),
         datasets: [
           {
             label: 'Depreciation',
-            backgroundColor: '#992222',
+            // backgroundColor: '#992222',
             data: this.$store.getters.getCapitalCosts
           }
         ]
@@ -44,21 +51,6 @@ export default {
     }
   },
   methods: {
-    fillData () {
-      this.datacollection = {
-        labels: ['Capital Costs'],
-        datasets: [
-          {
-            label: 'Depreciation',
-            backgroundColor: '#992222',
-            data: this.$store.getters.getCapitalCosts
-          }
-        ]
-      }
-    },
-    getRandomInt () {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-    }
   }
 };
 </script>
